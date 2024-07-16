@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Object Detection Video Results</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Object Detection Video Results</h1>
+
+    {% for model_name, result in results.items() %}
+        <h2>{{ model_name }}</h2>
+        <p>Average number of people detected per frame: {{ result['avg_person_count'] }}</p>
+        <p>Average inference time: {{ result['avg_inference_time'] }} seconds</p>
+        <p>Estimated mAP: {{ result['estimated_map'] }}</p>
+        <video width="640" height="480" controls>
+            <source src="{{ url_for('static', filename=result['video_path']) }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    {% endfor %}
+
+    <br>
+    <a href="{{ url_for('index') }}">Back to Home</a>
+</body>
+</html>
